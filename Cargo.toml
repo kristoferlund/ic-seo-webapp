@@ -1,0 +1,3 @@
+[workspace]
+members = ["src/server", "router_library"]
+resolver = "2"

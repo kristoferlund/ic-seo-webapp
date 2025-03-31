@@ -1,0 +1,25 @@
+[package]
+name = "server"
+version = "0.0.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+asset_util = { git = "https://github.com/dfinity/internet-identity.git" }
+candid = "0.10"
+ic-asset-certification = "3.0.3"
+ic-canister-sig-creation = "1.2.0"
+ic-cdk = "0.17"
+ic-certification = "3.0.3"
+ic-http-certification = "3.0.3"
+include_dir = { version = "0.7.4", features = ["glob"] }
+serde = "1.0.219"
+router_library = { path = "../../router_library" }
+minijinja = "2.8.0"
+
+[build-dependencies]
+router_library = { path = "../../router_library" }

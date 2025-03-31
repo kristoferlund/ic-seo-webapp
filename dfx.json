@@ -1,0 +1,20 @@
+{
+  "canisters": {
+    "server": {
+      "candid": "src/server/server.did",
+      "package": "server",
+      "type": "rust",
+      "declarations": {
+        "output": "src/server/declarations"
+      }
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
