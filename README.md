@@ -1,6 +1,7 @@
 # SEO-Optimized Dynamic Routing for Vite Apps on the Internet Computer
 
-> [!NOTE] > **This is an experimental project** — designed to demonstrate how single-page applications can serve SEO-friendly, route-specific content dynamically on the Internet Computer (ICP). This is not a polished library or CLI yet — feel free to fork and experiment.
+> [!NOTE]
+> **This is an experimental project** — designed to demonstrate how single-page applications can serve SEO-friendly, route-specific content dynamically on the Internet Computer (ICP). This is not a polished library or CLI yet — feel free to fork and experiment.
 
 ---
 
