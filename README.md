@@ -15,7 +15,20 @@ This project explores a pattern to solve that by:
 - Using file-based routing to map incoming requests to route handlers.
 - Optionally supporting full server-side rendering (e.g., with HTMX or other frameworks).
 
-## 👀 Live demo: <https://blx6i-6iaaa-aaaal-qslxq-cai.icp0.io>
+---
+
+## Run
+
+**👀 Live demo:** <https://blx6i-6iaaa-aaaal-qslxq-cai.icp0.io>
+
+### Locally
+
+```bash
+pnpm i
+pnpm run build
+dfx start --background --clean
+dfx deploy
+```
 
 ---
 
