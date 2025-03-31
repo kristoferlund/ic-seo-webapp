@@ -1,7 +1,6 @@
 # SEO-Optimized Dynamic Routing for Vite Apps on the Internet Computer
 
-> [!NOTE]
-> **This is an experimental project** — designed to demonstrate how single-page applications can serve SEO-friendly, route-specific content dynamically on the Internet Computer (ICP). This is not a polished library or CLI yet — feel free to fork and experiment.
+> [!NOTE] > **This is an experimental project** — designed to demonstrate how single-page applications can serve SEO-friendly, route-specific content dynamically on the Internet Computer (ICP). This is not a polished library or CLI yet — feel free to fork and experiment.
 
 ---
 
@@ -15,6 +14,8 @@ This project explores a pattern to solve that by:
 - Certifying these responses using ICP's HTTP certification.
 - Using file-based routing to map incoming requests to route handlers.
 - Optionally supporting full server-side rendering (e.g., with HTMX or other frameworks).
+
+## 👀 Live demo: <https://blx6i-6iaaa-aaaal-qslxq-cai.icp0.io>
 
 ---
 
@@ -71,6 +72,44 @@ pub fn http_request(req: HttpRequest) -> HttpResponse {
 #[update]
 fn http_request_update(req: HttpRequest) -> HttpResponse {
     ROUTES.with(|routes| router_library::http_request_update(req, routes))
+}
+```
+
+---
+
+## 🧪 Example: Route Handler
+
+A route handler accepts:
+
+- `HttpRequest`: the incoming request.
+- `RouteParams`: extracted path parameters (e.g., from `/subpath/:id`).
+
+It returns an `HttpResponse` struct, as defined by the `ic_http_certification` crate.
+
+### Example: `subpath/:id` Handler
+
+- Loads the pre-built index.html with a {{ title }} placeholder.
+- Uses minijinja to render the template with a route-specific title.
+- Constructs and returns an HttpResponse with text/html content.
+
+```rust
+use std::{borrow::Cow, collections::HashMap};
+use ic_http_certification::{HttpRequest, HttpResponse, StatusCode};
+use minijinja::Environment;
+use router_library::router::RouteParams;
+
+pub fn handler(_: HttpRequest, params: RouteParams) -> HttpResponse<'static> {
+    let html = include_str!("../../../../dist/index.html");
+    let env = Environment::new();
+    let template = env.template_from_str(html).unwrap();
+    let mut ctx = HashMap::new();
+    ctx.insert("title", format!("Subpage {}", params.get("id").unwrap()));
+    let rendered = template.render(ctx).unwrap();
+    HttpResponse::builder()
+        .with_headers(vec![("Content-Type".into(), "text/html".into())])
+        .with_status_code(StatusCode::OK)
+        .with_body(Cow::Owned(rendered.into_bytes()))
+        .build()
 }
 ```
 
