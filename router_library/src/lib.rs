@@ -14,6 +14,7 @@ thread_local! {
     static ASSET_ROUTER: RefCell<AssetRouter<'static>> = Default::default();
 }
 
+/// Serve assets that have already been certified, or upgrade the request to an update call
 pub fn http_request(req: HttpRequest) -> HttpResponse {
     ASSET_ROUTER.with_borrow(|asset_router| {
         if let Ok(response) = asset_router.serve_asset(
@@ -28,6 +29,8 @@ pub fn http_request(req: HttpRequest) -> HttpResponse {
     })
 }
 
+/// Match incoming requests to the appropriate handler, generating assets as needed
+/// and certifying them for future requests.
 pub fn http_request_update(req: HttpRequest, root_route_node: &RouteNode) -> HttpResponse<'static> {
     ic_cdk::println!("http_request_update: {:?}", req.url());
 
@@ -38,6 +41,7 @@ pub fn http_request_update(req: HttpRequest, root_route_node: &RouteNode) -> Htt
 
             let asset = Asset::new(path.clone(), response.body().to_vec());
 
+            // TODO: handlers should be able to specify asset settings when they generate assets
             let asset_config = AssetConfig::File {
                 path: path.to_string(),
                 content_type: Some("text/html".to_string()),

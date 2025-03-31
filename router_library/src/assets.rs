@@ -8,6 +8,7 @@ use crate::ASSET_ROUTER;
 pub const IMMUTABLE_ASSET_CACHE_CONTROL: &str = "public, max-age=31536000, immutable";
 pub const NO_CACHE_ASSET_CACHE_CONTROL: &str = "public, no-cache, no-store";
 
+// TODO: All this should be configurable in a config file.
 pub fn certify_all_assets(asset_dir: &Dir<'static>) {
     let encodings = vec![
         AssetEncoding::Brotli.default_config(),
@@ -88,6 +89,7 @@ pub fn collect_assets(dir: &Dir<'_>, assets: &mut Vec<Asset<'static, 'static>>) 
     }
 }
 
+// TODO: Should be configurable
 pub fn get_asset_headers(additional_headers: Vec<HeaderField>) -> Vec<HeaderField> {
     // set up the default headers and include additional headers provided by the caller
     let mut headers = vec![

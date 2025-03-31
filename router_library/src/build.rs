@@ -3,6 +3,8 @@ use std::fs::{self, File};
 use std::io::Write;
 use std::path::Path;
 
+/// Gnereates a route tree from the routes directory and writes it to a file. Also ensures that
+/// mod.rs files are created in each directory.
 pub fn generate_routes() {
     let routes_dir = Path::new("src/routes");
     let generated_file = Path::new("src/__route_tree.rs");
