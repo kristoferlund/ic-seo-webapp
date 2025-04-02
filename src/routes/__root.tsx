@@ -32,6 +32,12 @@ export const Route = createRootRoute({
         </div>
         <Outlet />
         <GreetForm />
+        <a
+          href="https://github.com/kristoferlund/ic-seo-webapp"
+          className="text-2xl text-white/50 underline"
+        >
+          Source code on GitHub
+        </a>
       </div>
     </main>
   ),
