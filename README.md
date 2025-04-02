@@ -1,7 +1,6 @@
 # SEO-Optimized Dynamic Routing for Vite Apps on the Internet Computer
 
-> [!NOTE]
-> **This is an experimental project** — designed to demonstrate how single-page applications can serve SEO-friendly, route-specific content dynamically on the Internet Computer (ICP). This is not a polished library or CLI yet — feel free to fork and experiment.
+> [!NOTE] > **This is an experimental project** — designed to demonstrate how single-page applications can serve SEO-friendly, route-specific content dynamically on the Internet Computer (ICP). This is not a polished library or CLI yet — feel free to fork and experiment.
 
 ---
 
@@ -22,13 +21,19 @@ This project explores a pattern to solve that by:
 
 **👀 Live demo:** <https://blx6i-6iaaa-aaaal-qslxq-cai.icp0.io>
 
-### Locally
+### Locally, using dfx
 
 ```bash
 pnpm i
-pnpm run build
 dfx start --background --clean
 dfx deploy
+```
+
+### Locally, using Vite dev server
+
+
+```bash
+pnpm run dev
 ```
 
 ---
@@ -71,7 +76,7 @@ fn init() {
     // Remove default root asset to ensure it's generated dynamically
     delete_assets(vec!["/"]);
 }
-```
+````
 
 ---
 

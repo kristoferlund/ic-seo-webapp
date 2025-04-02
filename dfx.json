@@ -1,12 +1,21 @@
 {
   "canisters": {
     "server": {
+      "build": [
+        "pnpm run build",
+        "cargo build --target wasm32-unknown-unknown --release -p server --locked"
+      ],
       "candid": "src/server/server.did",
-      "package": "server",
-      "type": "rust",
       "declarations": {
         "output": "src/server/declarations"
-      }
+      },
+      "frontend": {},
+      "gzip": false,
+      "optimize": "cycles",
+      "package": "server",
+      "shrink": false,
+      "type": "custom",
+      "wasm": "target/wasm32-unknown-unknown/release/server.wasm"
     }
   },
   "defaults": {
