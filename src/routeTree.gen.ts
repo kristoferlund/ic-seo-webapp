@@ -8,82 +8,43 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as Index2RouteImport } from './routes/index2'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as SubpathIdRouteImport } from './routes/subpath/$id'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as Index2Import } from './routes/index2'
-import { Route as IndexImport } from './routes/index'
-import { Route as SubpathIdImport } from './routes/subpath/$id'
-
-// Create/Update Routes
-
-const Index2Route = Index2Import.update({
+const Index2Route = Index2RouteImport.update({
   id: '/index2',
   path: '/index2',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const IndexRoute = IndexImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const SubpathIdRoute = SubpathIdImport.update({
+const SubpathIdRoute = SubpathIdRouteImport.update({
   id: '/subpath/$id',
   path: '/subpath/$id',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-// Populate the FileRoutesByPath interface
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/index2': {
-      id: '/index2'
-      path: '/index2'
-      fullPath: '/index2'
-      preLoaderRoute: typeof Index2Import
-      parentRoute: typeof rootRoute
-    }
-    '/subpath/$id': {
-      id: '/subpath/$id'
-      path: '/subpath/$id'
-      fullPath: '/subpath/$id'
-      preLoaderRoute: typeof SubpathIdImport
-      parentRoute: typeof rootRoute
-    }
-  }
-}
-
-// Create and export the route tree
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/index2': typeof Index2Route
   '/subpath/$id': typeof SubpathIdRoute
 }
-
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/index2': typeof Index2Route
   '/subpath/$id': typeof SubpathIdRoute
 }
-
 export interface FileRoutesById {
-  __root__: typeof rootRoute
+  __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/index2': typeof Index2Route
   '/subpath/$id': typeof SubpathIdRoute
 }
-
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths: '/' | '/index2' | '/subpath/$id'
@@ -92,11 +53,36 @@ export interface FileRouteTypes {
   id: '__root__' | '/' | '/index2' | '/subpath/$id'
   fileRoutesById: FileRoutesById
 }
-
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   Index2Route: typeof Index2Route
   SubpathIdRoute: typeof SubpathIdRoute
+}
+
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/index2': {
+      id: '/index2'
+      path: '/index2'
+      fullPath: '/index2'
+      preLoaderRoute: typeof Index2RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/subpath/$id': {
+      id: '/subpath/$id'
+      path: '/subpath/$id'
+      fullPath: '/subpath/$id'
+      preLoaderRoute: typeof SubpathIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -104,31 +90,6 @@ const rootRouteChildren: RootRouteChildren = {
   Index2Route: Index2Route,
   SubpathIdRoute: SubpathIdRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/index2",
-        "/subpath/$id"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/index2": {
-      "filePath": "index2.tsx"
-    },
-    "/subpath/$id": {
-      "filePath": "subpath/$id.tsx"
-    }
-  }
-}
-ROUTE_MANIFEST_END */

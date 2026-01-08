@@ -9,7 +9,7 @@ function Index() {
   const { id } = Route.useParams();
 
   useEffect(() => {
-    document.title = `Subpage ${id as string}`;
+    document.title = `Subpage ${id}`;
   }, [id]);
 
   return <div className="text-2xl text-white">Current page: /subpath/{id}</div>;

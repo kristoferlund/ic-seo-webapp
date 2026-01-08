@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import dotenv from "dotenv";
 import environment from "vite-plugin-environment";
 import path from "path";
-import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
+import { tanstackRouter } from "@tanstack/router-plugin/vite";
 
 dotenv.config({ path: ".env" });
 
@@ -33,7 +33,7 @@ export default defineConfig({
     environment("all", { prefix: "CANISTER_" }),
     environment("all", { prefix: "DFX_" }),
     tailwindcss(),
-    TanStackRouterVite({ target: "react", autoCodeSplitting: true }),
+    tanstackRouter({ target: "react", autoCodeSplitting: true }),
   ],
   resolve: {
     alias: {
