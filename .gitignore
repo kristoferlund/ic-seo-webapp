@@ -26,4 +26,3 @@ dist-ssr
 .env
 .dfx
 target
-canister_ids.json
