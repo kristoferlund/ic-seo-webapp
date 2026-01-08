@@ -39,5 +39,5 @@ fn http_request_update(req: HttpRequest) -> HttpResponse {
 
 #[query]
 fn greet(name: String) -> String {
-    format!("Hello, {}!", name)
+    format!("Hello, {name}!")
 }

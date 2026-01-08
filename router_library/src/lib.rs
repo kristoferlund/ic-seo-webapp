@@ -2,7 +2,7 @@ use std::cell::RefCell;
 
 use assets::{get_asset_headers, NO_CACHE_ASSET_CACHE_CONTROL};
 use ic_asset_certification::{Asset, AssetConfig, AssetRouter};
-use ic_cdk::api::{data_certificate, set_certified_data};
+use ic_cdk::api::{certified_data_set, data_certificate};
 use ic_http_certification::{HttpRequest, HttpResponse};
 use router::RouteNode;
 
@@ -56,9 +56,9 @@ pub fn http_request_update(req: HttpRequest, root_route_node: &RouteNode) -> Htt
 
             ASSET_ROUTER.with_borrow_mut(|asset_router| {
                 if let Err(err) = asset_router.certify_assets(vec![asset], vec![asset_config]) {
-                    ic_cdk::trap(&format!("Failed to certify dynamic asset: {}", err));
+                    ic_cdk::trap(format!("Failed to certify dynamic asset: {err}"));
                 }
-                set_certified_data(&asset_router.root_hash());
+                certified_data_set(asset_router.root_hash());
             });
 
             response

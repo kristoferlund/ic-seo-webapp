@@ -145,7 +145,7 @@ mod tests {
     }
 
     fn matched_deep(_: HttpRequest, params: RouteParams) -> HttpResponse<'static> {
-        response_with_text(&format!("deep: {:?}", params))
+        response_with_text(&format!("deep: {params:?}"))
     }
 
     fn matched_folder(_: HttpRequest, _: RouteParams) -> HttpResponse<'static> {

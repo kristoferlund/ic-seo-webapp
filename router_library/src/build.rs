@@ -21,8 +21,7 @@ pub fn generate_routes() {
 
     for (route_path, handler_path) in &route_map {
         output.push_str(&format!(
-            "        root.insert(\"{}\", {}::handler);\n",
-            route_path, handler_path
+            "        root.insert(\"{route_path}\", {handler_path}::handler);\n"
         ));
     }
 
@@ -43,9 +42,9 @@ fn process_directory(dir: &Path, prefix: String, output: &mut BTreeMap<String, S
         if path.is_dir() {
             let name = path.file_name().unwrap().to_str().unwrap();
             let next_prefix = if prefix.is_empty() {
-                format!("/{}", name)
+                format!("/{name}")
             } else {
-                format!("{}/{}", prefix, name)
+                format!("{prefix}/{name}")
             };
             fs::create_dir_all(&path).unwrap();
             process_directory(&path, next_prefix, output);
@@ -62,11 +61,10 @@ fn process_directory(dir: &Path, prefix: String, output: &mut BTreeMap<String, S
 
             if stem.starts_with(":") || stem == "*" {
                 mod_file.push_str(&format!(
-                    "#[path = \"./{}.rs\"]\npub mod {};\n",
-                    stem, mod_name
+                    "#[path = \"./{stem}.rs\"]\npub mod {mod_name};\n"
                 ));
             } else {
-                children.push(format!("pub mod {};\n", mod_name));
+                children.push(format!("pub mod {mod_name};\n"));
             }
 
             output.insert(route_path, handler_path);

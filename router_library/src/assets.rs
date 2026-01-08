@@ -1,5 +1,5 @@
 use ic_asset_certification::{Asset, AssetConfig, AssetEncoding};
-use ic_cdk::api::set_certified_data;
+use ic_cdk::api::certified_data_set;
 use ic_http_certification::HeaderField;
 use include_dir::Dir;
 
@@ -70,9 +70,9 @@ pub fn certify_all_assets(asset_dir: &Dir<'static>) {
 
     ASSET_ROUTER.with_borrow_mut(|asset_router| {
         if let Err(err) = asset_router.certify_assets(assets, asset_configs) {
-            ic_cdk::trap(&format!("Failed to certify assets: {}", err));
+            ic_cdk::trap(format!("Failed to certify assets: {err}"));
         }
-        set_certified_data(&asset_router.root_hash());
+        certified_data_set(asset_router.root_hash());
     });
 }
 
@@ -110,6 +110,6 @@ pub fn get_asset_headers(additional_headers: Vec<HeaderField>) -> Vec<HeaderFiel
 pub fn delete_assets(asset_paths: Vec<&str>) {
     ASSET_ROUTER.with_borrow_mut(|asset_router| {
         asset_router.delete_assets_by_path(asset_paths);
-        set_certified_data(&asset_router.root_hash());
+        certified_data_set(asset_router.root_hash());
     });
 }
